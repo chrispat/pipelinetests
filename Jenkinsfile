@@ -8,10 +8,19 @@ pipeline {
     }
     stage('deploy') {
       steps {
-        retry(count: 3) {
-          sh 'echo "Hello world"'
-        }
-        
+        parallel(
+          "deploy": {
+            retry(count: 3) {
+              sh 'echo "Hello world"'
+            }
+            
+            
+          },
+          "deploy 2": {
+            echo 'run deploy 2'
+            
+          }
+        )
       }
     }
   }
