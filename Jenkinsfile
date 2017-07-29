@@ -6,5 +6,13 @@ pipeline {
         echo 'Hello World'
       }
     }
+    stage('deploy') {
+      steps {
+        retry(count: 3) {
+          sh 'echo "Hello world"'
+        }
+        
+      }
+    }
   }
 }
