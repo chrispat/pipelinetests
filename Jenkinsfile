@@ -1,29 +1,19 @@
 pipeline {
-    agent { docker 'node:6.3' }
+    agent none
     stages {
         stage('build') {
+            agent { docker 'node:6.3' }
             steps {
                 sh 'npm --version'
             }
         }
-    stage('deploy') {
-      steps {
-        parallel(
-          "deploy": {
-            retry(count: 3) {
-              sh 'echo "Hello world"'
+        stage('deploy') {
+            agent { docker 'maven:3.3.3' }
+            steps {
+                sh 'mvn --version'
             }
-            
-            
-          },
-          "deploy 2": {
-            echo 'run deploy 2'
-            
-          }
-        )
-      }
+        }
     }
-  }
   environment {
     foo = 'bar'
   }
