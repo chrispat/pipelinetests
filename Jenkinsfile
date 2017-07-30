@@ -7,11 +7,12 @@ pipeline {
             }
         }
     stage('deploy') {
+      agent { docker 'maven:3.3.3' }
       steps {
         parallel(
           "deploy": {
             retry(count: 3) {
-              sh 'echo "Hello world"'
+              sh 'mvn --version'
             }
             
             
